@@ -1,18 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Submit a Complaint</title>
 
   <style>
-
     :root {
       --primary-green: #86efac;
+      --dark-green: #14532d;
       --light-green: #f0fdf4;
-      --dark-green: #166534;
-      --border-green: #4ade80;
+      --border-green: #22c55e;
       --text-main: #1e293b;
+    }
+
+    * {
+      box-sizing: border-box;
     }
 
     body {
@@ -27,7 +30,7 @@
     }
 
     .form-container {
-      background: white;
+      background: #ffffff;
       border-radius: 20px;
       box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
       width: 100%;
@@ -37,19 +40,19 @@
 
     .form-header {
       background: linear-gradient(135deg, #bbf7d0, #86efac);
-      color: #14532d;
+      color: var(--dark-green);
       padding: 30px;
       text-align: center;
     }
 
     .form-header h2 {
-      margin: 0 0 10px 0;
+      margin: 0 0 10px;
       font-size: 28px;
     }
 
     .form-header p {
       margin: 0;
-      color: #166534;
+      opacity: 0.9;
     }
 
     .form-body {
@@ -70,59 +73,82 @@
     .form-control {
       width: 100%;
       padding: 12px 15px;
-      border: 2px solid #d1d5db;
+      border: 2px solid #e2e8f0;
       border-radius: 10px;
       font-size: 15px;
-      box-sizing: border-box;
       transition: 0.3s;
     }
 
     .form-control:focus {
       outline: none;
       border-color: var(--border-green);
-      box-shadow: 0 0 0 3px rgba(74, 222, 128, 0.2);
+      box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.15);
     }
-
 
     .category-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 10px;
-      margin-bottom: 20px;
     }
 
     .category-card {
       border: 2px solid #e2e8f0;
       border-radius: 12px;
-      padding: 15px;
+      padding: 15px 10px;
       text-align: center;
       cursor: pointer;
-      transition: all 0.2s ease;
-      background: white;
+      transition: 0.2s;
+      user-select: none;
+      background: #ffffff;
+      font-weight: 600;
     }
 
     .category-card:hover {
       border-color: var(--border-green);
-      background-color: var(--light-green);
+      background: #f0fdf4;
       transform: translateY(-2px);
     }
 
     .category-card.selected {
-      border-color: #22c55e;
-      background-color: #dcfce7;
+      border: 2px solid #16a34a;
+      background: #bbf7d0;
+      color: #14532d;
+      box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.15);
+      transform: translateY(-2px);
+    }
+
+    .selected-category {
+      margin-top: 10px;
+      padding: 10px;
+      border-radius: 8px;
+      background: #f0fdf4;
       color: #166534;
-      font-weight: bold;
+      font-size: 14px;
+      font-weight: 600;
+      display: none;
     }
 
     .word-counter {
-      margin-top: 6px;
+      text-align: right;
       font-size: 13px;
-      color: #dc2626;
-      font-weight: 600;
+      margin-top: 5px;
+      color: #64748b;
     }
 
     .word-counter.valid {
       color: #16a34a;
+      font-weight: 600;
+    }
+
+    .word-counter.invalid {
+      color: #dc2626;
+    }
+
+    .error-message {
+      color: #dc2626;
+      font-size: 13px;
+      margin-top: 6px;
+      display: none;
     }
 
     .btn-submit {
@@ -144,283 +170,209 @@
       box-shadow: 0 10px 20px rgba(34, 197, 94, 0.25);
     }
 
-    .error-message {
-      color: #dc2626;
-      font-size: 14px;
-      margin-top: 6px;
-      display: none;
-    }
-
     @media (max-width: 600px) {
-
       .category-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, 1fr);
       }
 
       .form-body {
         padding: 20px;
       }
-
-      .form-header h2 {
-        font-size: 24px;
-      }
     }
-
   </style>
 </head>
 
 <body>
 
-<div class="form-container">
+  <div class="form-container">
 
+    <div class="form-header">
+      <h2>Register a Complaint</h2>
+      <p>We're here to help! Let us know what went wrong.</p>
+    </div>
 
-  <div class="form-header">
+    <form class="form-body" id="complaintForm">
 
-    <h2>Register a Complaint</h2>
+      <div class="form-group">
+        <label for="name">Full Name</label>
+        <input
+          type="text"
+          id="name"
+          class="form-control"
+          placeholder="Enter Name"
+          required
+        >
+      </div>
 
-    <p>
-      We're here to help! Let us know what went wrong.
-    </p>
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input
+          type="email"
+          id="email"
+          class="form-control"
+          placeholder="yash143@gmail.com"
+          required
+        >
+      </div>
 
+      <div class="form-group">
+        <label>Category</label>
+
+        <div class="category-grid">
+
+          <div class="category-card" data-category="Technical">
+            💻 Technical
+          </div>
+
+          <div class="category-card" data-category="Billing">
+            💳 Billing
+          </div>
+
+          <div class="category-card" data-category="Delivery">
+            📦 Delivery
+          </div>
+
+          <div class="category-card" data-category="Service">
+            🛠️ Service
+          </div>
+
+          <div class="category-card" data-category="Account">
+            👤 Account
+          </div>
+
+          <div class="category-card" data-category="Other">
+            📋 Other
+          </div>
+
+        </div>
+
+        <div id="selectedCategory" class="selected-category"></div>
+
+        <input type="hidden" id="category" required>
+      </div>
+
+      <div class="form-group">
+        <label for="subject">Complaint Subject</label>
+        <input
+          type="text"
+          id="subject"
+          class="form-control"
+          placeholder="Brief summary"
+          required
+        >
+      </div>
+
+      <div class="form-group">
+        <label for="details">Detailed Description</label>
+
+        <textarea
+          id="details"
+          class="form-control"
+          rows="5"
+          placeholder="Describe your issue in at least 30 words..."
+          required
+        ></textarea>
+
+        <div id="wordCounter" class="word-counter">
+          0 / 30 words
+        </div>
+
+        <div id="errorMessage" class="error-message">
+          Description must contain at least 30 words.
+        </div>
+      </div>
+
+      <button type="submit" class="btn-submit">
+        Submit Complaint
+      </button>
+
+    </form>
   </div>
 
+  <script>
+    const categoryCards = document.querySelectorAll(".category-card");
+    const categoryInput = document.getElementById("category");
+    const selectedCategory = document.getElementById("selectedCategory");
 
-  <form class="form-body" id="complaintForm">
+    categoryCards.forEach(card => {
+      card.addEventListener("click", function() {
 
+        categoryCards.forEach(item => {
+          item.classList.remove("selected");
+        });
 
-    <div class="form-group">
+        this.classList.add("selected");
 
-      <label for="name">
-        Full Name
-      </label>
+        const categoryName = this.getAttribute("data-category");
 
-      <input
-        type="text"
-        id="name"
-        class="form-control"
-        placeholder="Enter Name"
-        required
-      >
+        categoryInput.value = categoryName;
 
-    </div>
-
-
-    <div class="form-group">
-
-      <label for="email">
-        Email Address
-      </label>
-
-      <input
-        type="email"
-        id="email"
-        class="form-control"
-        placeholder="piyush123@gmail.com"
-        required
-      >
-
-    </div>
-
-
-    <div class="form-group">
-
-      <label>
-        Category
-      </label>
-
-      <div class="category-grid">
-
-        <div
-          class="category-card"
-          data-category="Technical"
-          style="border-left: 4px solid #3b82f6;"
-        >
-          💻 Technical
-        </div>
-
-        <div
-          class="category-card"
-          data-category="Billing"
-          style="border-left: 4px solid #10b981;"
-        >
-          💳 Billing
-        </div>
-
-        <div
-          class="category-card"
-          data-category="Delivery"
-          style="border-left: 4px solid #f59e0b;"
-        >
-          📦 Delivery
-        </div>
-
-      </div>
-
-    </div>
-
-
-    <div class="form-group">
-
-      <label for="subject">
-        Complaint Subject
-      </label>
-
-      <input
-        type="text"
-        id="subject"
-        class="form-control"
-        placeholder="Brief summary"
-        required
-      >
-
-    </div>
-
-
-    <div class="form-group">
-
-      <label for="details">
-        Detailed Description
-      </label>
-
-      <textarea
-        id="details"
-        class="form-control"
-        rows="5"
-        placeholder="Describe your issue in at least 30 words..."
-        required
-      ></textarea>
-
-      <div id="wordCounter" class="word-counter">
-        0 / 30 words
-      </div>
-
-      <div id="errorMessage" class="error-message">
-        Please enter at least 30 words in the description.
-      </div>
-
-    </div>
-
-
-    <button
-      type="submit"
-      class="btn-submit"
-    >
-      Submit Complaint
-    </button>
-
-  </form>
-
-</div>
-
-
-<script>
-
-  const categories =
-    document.querySelectorAll(".category-card");
-
-  categories.forEach(category => {
-
-    category.addEventListener("click", function() {
-
-      categories.forEach(item => {
-        item.classList.remove("selected");
+        selectedCategory.textContent = "Selected Category: " + categoryName;
+        selectedCategory.style.display = "block";
       });
-
-      this.classList.add("selected");
-
     });
 
-  });
+    const details = document.getElementById("details");
+    const wordCounter = document.getElementById("wordCounter");
+    const errorMessage = document.getElementById("errorMessage");
+    const complaintForm = document.getElementById("complaintForm");
 
-
-  const details =
-    document.getElementById("details");
-
-  const wordCounter =
-    document.getElementById("wordCounter");
-
-  const errorMessage =
-    document.getElementById("errorMessage");
-
-
-  function countWords(text) {
-
-    return text
-      .trim()
-      .split(/\s+/)
-      .filter(word => word.length > 0)
-      .length;
-
-  }
-
-
-  details.addEventListener("input", function() {
-
-    const words =
-      countWords(this.value);
-
-    wordCounter.textContent =
-      words + " / 30 words";
-
-
-    if (words >= 30) {
-
-      wordCounter.classList.add("valid");
-
-      errorMessage.style.display =
-        "none";
-
-    } else {
-
-      wordCounter.classList.remove("valid");
-
+    function countWords(text) {
+      return text.trim() === ""
+        ? 0
+        : text.trim().split(/\s+/).length;
     }
 
-  });
+    details.addEventListener("input", function() {
+      const words = countWords(this.value);
 
+      wordCounter.textContent = words + " / 30 words";
 
-  document
-    .getElementById("complaintForm")
-    .addEventListener("submit", function(event) {
+      if (words >= 30) {
+        wordCounter.classList.remove("invalid");
+        wordCounter.classList.add("valid");
+        errorMessage.style.display = "none";
+      } else {
+        wordCounter.classList.remove("valid");
+        wordCounter.classList.add("invalid");
+      }
+    });
 
+    complaintForm.addEventListener("submit", function(event) {
       event.preventDefault();
 
+      const words = countWords(details.value);
 
-      const description =
-        details.value.trim();
-
-
-      const words =
-        countWords(description);
-
-
-      if (words < 30) {
-
-        errorMessage.style.display =
-          "block";
-
-        details.focus();
-
+      if (categoryInput.value === "") {
+        alert("Please select a complaint category.");
         return;
-
       }
 
-      alert(
-        "Complaint submitted successfully!"
-      );
+      if (words < 30) {
+        errorMessage.style.display = "block";
+        details.focus();
+        return;
+      }
 
-      this.reset();
+      alert("Complaint submitted successfully!");
 
+      complaintForm.reset();
 
-      categories.forEach(category => {
-        category.classList.remove("selected");
+      categoryCards.forEach(card => {
+        card.classList.remove("selected");
       });
 
+      selectedCategory.style.display = "none";
+      selectedCategory.textContent = "";
+      categoryInput.value = "";
 
-      wordCounter.textContent =
-        "0 / 30 words";
-
+      wordCounter.textContent = "0 / 30 words";
       wordCounter.classList.remove("valid");
+      wordCounter.classList.remove("invalid");
+      errorMessage.style.display = "none";
+    });
+  </script>
 
-      errorMessage
-```
+</body>
+</html>
+
