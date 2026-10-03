@@ -1,26 +1,23 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>College Complaint Registration</title>
-
-    <style>
+<title>College Complaint Registration</title>
+ <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-        }
-
-        body {
+        }   
+       body {
             font-family: Arial, Helvetica, sans-serif;
             background: linear-gradient(135deg, #eef2ff, #f5f3ff, #fdf2f8);
             min-height: 100vh;
             color: #1e293b;
         }
 
-        /* HEADER */
         header {
             background: linear-gradient(135deg, #4f46e5, #7c3aed);
             color: white;
@@ -52,7 +49,6 @@
             color: #ddd6fe;
         }
 
-        /* HERO */
         .hero {
             text-align: center;
             padding: 45px 20px 30px;
@@ -69,7 +65,6 @@
             font-size: 17px;
         }
 
-        /* MAIN CONTAINER */
         .container {
             width: 90%;
             max-width: 900px;
@@ -89,7 +84,6 @@
             margin-bottom: 25px;
         }
 
-        /* FORM */
         .form-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -131,7 +125,22 @@
             min-height: 130px;
         }
 
-        /* CATEGORY */
+        .word-count {
+            font-size: 13px;
+            margin-top: 6px;
+            color: #64748b;
+        }
+
+        .word-count.valid {
+            color: #059669;
+            font-weight: bold;
+        }
+
+        .word-count.invalid {
+            color: #dc2626;
+            font-weight: bold;
+        }
+
         .category-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -167,7 +176,6 @@
             margin-bottom: 7px;
         }
 
-        /* BUTTON */
         .submit-btn {
             width: 100%;
             border: none;
@@ -186,7 +194,6 @@
             box-shadow: 0 10px 20px rgba(79,70,229,0.25);
         }
 
-        /* SUCCESS */
         .success {
             display: none;
             background: #ecfdf5;
@@ -208,7 +215,6 @@
             margin-top: 8px;
         }
 
-        /* TRACK */
         .track-box {
             display: flex;
             gap: 10px;
@@ -253,7 +259,6 @@
             margin-top: 10px;
         }
 
-        /* COMPLAINT HISTORY */
         .complaint-item {
             border: 1px solid #e2e8f0;
             padding: 18px;
@@ -272,7 +277,6 @@
             padding: 20px;
         }
 
-        /* FOOTER */
         footer {
             background: #0f172a;
             color: white;
@@ -286,7 +290,6 @@
             margin-top: 7px;
         }
 
-        /* RESPONSIVE */
         @media (max-width: 700px) {
 
             header {
@@ -325,7 +328,6 @@
 
 <body>
 
-<!-- HEADER -->
 <header>
     <div class="logo">
         🎓 College <span>Complaint Portal</span>
@@ -338,13 +340,10 @@
     </nav>
 </header>
 
-
-<!-- HERO -->
 <section class="hero">
     <h1>Student Complaint Registration</h1>
     <p>Raise your concern and track its progress easily.</p>
 </section>
-
 
 <div class="container">
 
@@ -359,7 +358,6 @@
             Please save this Complaint ID for tracking.
         </p>
     </div>
-
 
     <!-- REGISTRATION FORM -->
     <div class="card" id="register">
@@ -377,10 +375,11 @@
                         type="text"
                         id="studentName"
                         placeholder="Enter your full name"
+                        pattern="[A-Za-z ]+"
+                        title="Name can contain only letters and spaces"
                         required
                     >
                 </div>
-
 
                 <div class="form-group">
                     <label for="studentEmail">Email Address *</label>
@@ -395,7 +394,6 @@
 
             </div>
 
-
             <div class="form-row">
 
                 <div class="form-group">
@@ -409,14 +407,12 @@
                     >
                 </div>
 
-
                 <div class="form-group">
                     <label for="department">Department *</label>
 
                     <select id="department" required>
 
                         <option value="">Select Department</option>
-
                         <option>Computer Engineering</option>
                         <option>Information Technology</option>
                         <option>Computer Science</option>
@@ -430,7 +426,6 @@
                 </div>
 
             </div>
-
 
             <!-- CATEGORY -->
             <div class="form-group">
@@ -481,29 +476,29 @@
 
                 </div>
 
-                <input
-                    type="hidden"
-                    id="category"
-                    required
-                >
+                <input type="hidden" id="category" required>
 
             </div>
-
 
             <!-- SUBJECT -->
             <div class="form-group">
 
-                <label for="subject">Complaint Subject *</label>
+                <label for="subject">
+                    Complaint Subject * (Minimum 20 words)
+                </label>
 
                 <input
                     type="text"
                     id="subject"
-                    placeholder="Enter a short title for your complaint"
+                    placeholder="Write at least 20 words for your complaint subject"
                     required
                 >
 
-            </div>
+                <div id="subjectCount" class="word-count">
+                    0 / 20 words
+                </div>
 
+            </div>
 
             <!-- PRIORITY -->
             <div class="form-group">
@@ -522,20 +517,24 @@
 
             </div>
 
-
             <!-- DESCRIPTION -->
             <div class="form-group">
 
-                <label for="description">Detailed Description *</label>
+                <label for="description">
+                    Detailed Description * (Minimum 30 words)
+                </label>
 
                 <textarea
                     id="description"
-                    placeholder="Explain your complaint in detail..."
+                    placeholder="Explain your complaint in detail using at least 30 words..."
                     required
                 ></textarea>
 
-            </div>
+                <div id="descriptionCount" class="word-count">
+                    0 / 30 words
+                </div>
 
+            </div>
 
             <!-- ATTACHMENT -->
             <div class="form-group">
@@ -552,7 +551,6 @@
 
             </div>
 
-
             <button
                 type="submit"
                 class="submit-btn"
@@ -563,7 +561,6 @@
         </form>
 
     </div>
-
 
     <!-- TRACK COMPLAINT -->
     <div class="card" id="track">
@@ -591,7 +588,6 @@
 
     </div>
 
-
     <!-- HISTORY -->
     <div class="card" id="history">
 
@@ -603,8 +599,6 @@
 
 </div>
 
-
-<!-- FOOTER -->
 <footer>
 
     <h3>🎓 College Complaint Portal</h3>
@@ -619,14 +613,14 @@
 
 </footer>
 
-
 <script>
 
     /* ==============================
        CATEGORY SELECTION
     ============================== */
 
-    const categories = document.querySelectorAll(".category");
+    const categories =
+        document.querySelectorAll(".category");
 
     categories.forEach(category => {
 
@@ -642,6 +636,85 @@
                 this.dataset.category;
 
         });
+
+    });
+
+
+    /* ==============================
+       WORD COUNT FUNCTION
+    ============================== */
+
+    function countWords(text) {
+
+        return text
+            .trim()
+            .split(/\s+/)
+            .filter(word => word.length > 0)
+            .length;
+
+    }
+
+
+    /* ==============================
+       SUBJECT WORD COUNT
+    ============================== */
+
+    const subject =
+        document.getElementById("subject");
+
+    const subjectCount =
+        document.getElementById("subjectCount");
+
+    subject.addEventListener("input", function() {
+
+        const words = countWords(this.value);
+
+        subjectCount.textContent =
+            words + " / 20 words";
+
+        if (words >= 20) {
+
+            subjectCount.classList.add("valid");
+            subjectCount.classList.remove("invalid");
+
+        } else {
+
+            subjectCount.classList.add("invalid");
+            subjectCount.classList.remove("valid");
+
+        }
+
+    });
+
+
+    /* ==============================
+       DESCRIPTION WORD COUNT
+    ============================== */
+
+    const description =
+        document.getElementById("description");
+
+    const descriptionCount =
+        document.getElementById("descriptionCount");
+
+    description.addEventListener("input", function() {
+
+        const words = countWords(this.value);
+
+        descriptionCount.textContent =
+            words + " / 30 words";
+
+        if (words >= 30) {
+
+            descriptionCount.classList.add("valid");
+            descriptionCount.classList.remove("invalid");
+
+        } else {
+
+            descriptionCount.classList.add("invalid");
+            descriptionCount.classList.remove("valid");
+
+        }
 
     });
 
@@ -670,28 +743,102 @@
         event.preventDefault();
 
 
-        const category =
-            document.getElementById("category").value;
+        /* NAME VALIDATION */
 
-        if (category === "") {
+        const name =
+            document.getElementById("studentName").value.trim();
 
-            alert("Please select a complaint category.");
+        const namePattern =
+            /^[A-Za-z ]+$/;
+
+        if (!namePattern.test(name)) {
+
+            alert(
+                "Student Name can contain only letters and spaces."
+            );
 
             return;
 
         }
 
 
+        /* CATEGORY VALIDATION */
+
+        const category =
+            document.getElementById("category").value;
+
+        if (category === "") {
+
+            alert(
+                "Please select a complaint category."
+            );
+
+            return;
+
+        }
+
+
+        /* SUBJECT VALIDATION */
+
+        const subjectText =
+            document.getElementById("subject").value.trim();
+
+        const subjectWords =
+            countWords(subjectText);
+
+        if (subjectWords < 20) {
+
+            alert(
+                "Complaint Subject must contain at least 20 words.\n\n" +
+                "You have entered only " +
+                subjectWords +
+                " words."
+            );
+
+            document.getElementById("subject").focus();
+
+            return;
+
+        }
+
+
+        /* DESCRIPTION VALIDATION */
+
+        const descriptionText =
+            document.getElementById("description").value.trim();
+
+        const descriptionWords =
+            countWords(descriptionText);
+
+        if (descriptionWords < 30) {
+
+            alert(
+                "Detailed Description must contain at least 30 words.\n\n" +
+                "You have entered only " +
+                descriptionWords +
+                " words."
+            );
+
+            document.getElementById("description").focus();
+
+            return;
+
+        }
+
+
+        /* GENERATE ID */
+
         const complaintId =
             generateComplaintId();
 
+
+        /* CREATE COMPLAINT OBJECT */
 
         const complaint = {
 
             id: complaintId,
 
-            name:
-                document.getElementById("studentName").value,
+            name: name,
 
             email:
                 document.getElementById("studentEmail").value,
@@ -702,17 +849,14 @@
             department:
                 document.getElementById("department").value,
 
-            category:
-                category,
+            category: category,
 
-            subject:
-                document.getElementById("subject").value,
+            subject: subjectText,
 
             priority:
                 document.getElementById("priority").value,
 
-            description:
-                document.getElementById("description").value,
+            description: descriptionText,
 
             date:
                 new Date().toLocaleString(),
@@ -723,7 +867,9 @@
         };
 
 
-        /* GET EXISTING COMPLAINTS */
+        /* ==============================
+           GET OLD HISTORY
+        ============================== */
 
         let complaints =
             JSON.parse(
@@ -731,12 +877,12 @@
             ) || [];
 
 
-        /* ADD NEW COMPLAINT */
+        /* ==============================
+           SAVE NEW COMPLAINT
+        ============================== */
 
         complaints.push(complaint);
 
-
-        /* SAVE */
 
         localStorage.setItem(
             "complaints",
@@ -744,16 +890,21 @@
         );
 
 
-        /* SHOW SUCCESS */
+        /* ==============================
+           SHOW SUCCESS
+        ============================== */
 
-        document.getElementById("generatedId").textContent =
+        document.getElementById("generatedId")
+            .textContent =
             "Complaint ID: " + complaintId;
 
-        document.getElementById("successMessage").style.display =
-            "block";
+        document.getElementById("successMessage")
+            .style.display = "block";
 
 
-        /* RESET FORM */
+        /* ==============================
+           RESET FORM
+        ============================== */
 
         this.reset();
 
@@ -763,13 +914,33 @@
 
         document.getElementById("category").value = "";
 
+        subjectCount.textContent =
+            "0 / 20 words";
 
-        /* UPDATE HISTORY */
+        subjectCount.classList.remove(
+            "valid",
+            "invalid"
+        );
+
+        descriptionCount.textContent =
+            "0 / 30 words";
+
+        descriptionCount.classList.remove(
+            "valid",
+            "invalid"
+        );
+
+
+        /* ==============================
+           UPDATE HISTORY
+        ============================== */
 
         displayHistory();
 
 
-        /* SCROLL TO SUCCESS */
+        /* ==============================
+           SCROLL TO SUCCESS
+        ============================== */
 
         document.getElementById("successMessage")
             .scrollIntoView({
@@ -790,7 +961,6 @@
             .value
             .trim()
             .toUpperCase();
-
 
         const result =
             document.getElementById("trackResult");
@@ -813,17 +983,25 @@
 
 
         const complaint =
-            complaints.find(item => item.id === id);
+            complaints.find(
+                item => item.id === id
+            );
 
 
         if (!complaint) {
 
             result.innerHTML = `
                 <div class="status-card">
-                    <strong>❌ Complaint Not Found</strong>
+
+                    <strong>
+                        ❌ Complaint Not Found
+                    </strong>
+
                     <p style="margin-top:8px;">
-                        Please check your Complaint ID and try again.
+                        Please check your Complaint ID
+                        and try again.
                     </p>
+
                 </div>
             `;
 
@@ -836,7 +1014,9 @@
 
             <div class="status-card">
 
-                <h3>${complaint.subject}</h3>
+                <h3>
+                    ${complaint.subject}
+                </h3>
 
                 <p style="margin-top:8px;">
                     <strong>Complaint ID:</strong>
@@ -964,3 +1144,4 @@
 
 </body>
 </html>
+```
