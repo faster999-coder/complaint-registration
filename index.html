@@ -1,378 +1,1075 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Submit a Complaint</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-    :root {
-      --primary-green: #86efac;
-      --dark-green: #14532d;
-      --light-green: #f0fdf4;
-      --border-green: #22c55e;
-      --text-main: #1e293b;
-    }
+    <title>College Complaint Registration</title>
 
-    * {
-      box-sizing: border-box;
-    }
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #f0fdf4, #dcfce7, #ecfdf5);
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin: 0;
-      padding: 20px;
-    }
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: linear-gradient(135deg, #eef2ff, #f5f3ff, #fdf2f8);
+            min-height: 100vh;
+            color: #1e293b;
+        }
 
-    .form-container {
-      background: #ffffff;
-      border-radius: 20px;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-      width: 100%;
-      max-width: 600px;
-      overflow: hidden;
-    }
+        header {
+            background: linear-gradient(135deg, #4f46e5, #7c3aed);
+            color: white;
+            padding: 20px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
 
-    .form-header {
-      background: linear-gradient(135deg, #bbf7d0, #86efac);
-      color: var(--dark-green);
-      padding: 30px;
-      text-align: center;
-    }
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
 
-    .form-header h2 {
-      margin: 0 0 10px;
-      font-size: 28px;
-    }
+        .logo span {
+            color: #ddd6fe;
+        }
 
-    .form-header p {
-      margin: 0;
-      opacity: 0.9;
-    }
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 25px;
+            font-weight: 600;
+            cursor: pointer;
+        }
 
-    .form-body {
-      padding: 30px;
-    }
+        nav a:hover {
+            color: #ddd6fe;
+        }
 
-    .form-group {
-      margin-bottom: 20px;
-    }
+        .hero {
+            text-align: center;
+            padding: 45px 20px 30px;
+        }
 
-    .form-group label {
-      display: block;
-      font-weight: 600;
-      margin-bottom: 8px;
-      color: var(--text-main);
-    }
+        .hero h1 {
+            font-size: 38px;
+            margin-bottom: 12px;
+            color: #312e81;
+        }
 
-    .form-control {
-      width: 100%;
-      padding: 12px 15px;
-      border: 2px solid #e2e8f0;
-      border-radius: 10px;
-      font-size: 15px;
-      transition: 0.3s;
-    }
+        .hero p {
+            color: #64748b;
+            font-size: 17px;
+        }
 
-    .form-control:focus {
-      outline: none;
-      border-color: var(--border-green);
-      box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.15);
-    }
+        .container {
+            width: 90%;
+            max-width: 900px;
+            margin: 20px auto 50px;
+        }
 
-    .category-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-    }
+        .card {
+            background: white;
+            border-radius: 18px;
+            padding: 30px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+            margin-bottom: 25px;
+        }
 
-    .category-card {
-      border: 2px solid #e2e8f0;
-      border-radius: 12px;
-      padding: 15px 10px;
-      text-align: center;
-      cursor: pointer;
-      transition: 0.2s;
-      user-select: none;
-      background: #ffffff;
-      font-weight: 600;
-    }
+        .card h2 {
+            color: #312e81;
+            margin-bottom: 25px;
+        }
 
-    .category-card:hover {
-      border-color: var(--border-green);
-      background: #f0fdf4;
-      transform: translateY(-2px);
-    }
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
 
-    .category-card.selected {
-      border: 2px solid #16a34a;
-      background: #bbf7d0;
-      color: #14532d;
-      box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.15);
-      transform: translateY(-2px);
-    }
+        .form-group {
+            margin-bottom: 20px;
+        }
 
-    .selected-category {
-      margin-top: 10px;
-      padding: 10px;
-      border-radius: 8px;
-      background: #f0fdf4;
-      color: #166534;
-      font-size: 14px;
-      font-weight: 600;
-      display: none;
-    }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #334155;
+        }
 
-    .word-counter {
-      text-align: right;
-      font-size: 13px;
-      margin-top: 5px;
-      color: #64748b;
-    }
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 13px 14px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 15px;
+            outline: none;
+            transition: 0.3s;
+        }
 
-    .word-counter.valid {
-      color: #16a34a;
-      font-weight: 600;
-    }
+        input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: #6366f1;
+            box-shadow: 0 0 0 3px rgba(99,102,241,0.12);
+        }
 
-    .word-counter.invalid {
-      color: #dc2626;
-    }
+        textarea {
+            resize: vertical;
+            min-height: 130px;
+        }
 
-    .error-message {
-      color: #dc2626;
-      font-size: 13px;
-      margin-top: 6px;
-      display: none;
-    }
+        .word-count {
+            font-size: 13px;
+            margin-top: 6px;
+            color: #64748b;
+        }
 
-    .btn-submit {
-      width: 100%;
-      background: #86efac;
-      color: #14532d;
-      border: none;
-      padding: 15px;
-      border-radius: 10px;
-      font-size: 18px;
-      font-weight: bold;
-      cursor: pointer;
-      transition: 0.2s;
-    }
+        .word-count.valid {
+            color: #059669;
+            font-weight: bold;
+        }
 
-    .btn-submit:hover {
-      background: #4ade80;
-      transform: translateY(-2px);
-      box-shadow: 0 10px 20px rgba(34, 197, 94, 0.25);
-    }
+        .word-count.invalid {
+            color: #dc2626;
+            font-weight: bold;
+        }
 
-    @media (max-width: 600px) {
-      .category-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+        }
 
-      .form-body {
-        padding: 20px;
-      }
-    }
-  </style>
+        .category {
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 15px 8px;
+            text-align: center;
+            cursor: pointer;
+            background: white;
+            transition: 0.25s;
+            font-size: 14px;
+        }
+
+        .category:hover {
+            border-color: #6366f1;
+            background: #eef2ff;
+        }
+
+        .category.selected {
+            border-color: #4f46e5;
+            background: #eef2ff;
+            color: #3730a3;
+            font-weight: bold;
+        }
+
+        .category-icon {
+            font-size: 25px;
+            display: block;
+            margin-bottom: 7px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            border: none;
+            border-radius: 10px;
+            padding: 15px;
+            background: linear-gradient(135deg, #4f46e5, #7c3aed);
+            color: white;
+            font-size: 17px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.25s;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(79,70,229,0.25);
+        }
+
+        .success {
+            display: none;
+            background: #ecfdf5;
+            border: 2px solid #10b981;
+            color: #065f46;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+        }
+
+        .success h3 {
+            margin-bottom: 8px;
+        }
+
+        .complaint-id {
+            font-size: 20px;
+            font-weight: bold;
+            color: #047857;
+            margin-top: 8px;
+        }
+
+        .track-box {
+            display: flex;
+            gap: 10px;
+        }
+
+        .track-box input {
+            flex: 1;
+        }
+
+        .track-btn {
+            border: none;
+            background: #0f172a;
+            color: white;
+            padding: 0 25px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .track-btn:hover {
+            background: #334155;
+        }
+
+        #trackResult {
+            margin-top: 20px;
+        }
+
+        .status-card {
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 20px;
+            background: #f8fafc;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 7px 13px;
+            border-radius: 20px;
+            background: #fef3c7;
+            color: #92400e;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .complaint-item {
+            border: 1px solid #e2e8f0;
+            padding: 18px;
+            border-radius: 12px;
+            margin-bottom: 12px;
+            background: #f8fafc;
+        }
+
+        .complaint-item strong {
+            color: #3730a3;
+        }
+
+        .empty {
+            color: #64748b;
+            text-align: center;
+            padding: 20px;
+        }
+
+        footer {
+            background: #0f172a;
+            color: white;
+            text-align: center;
+            padding: 25px;
+            margin-top: 50px;
+        }
+
+        footer p {
+            color: #cbd5e1;
+            margin-top: 7px;
+        }
+
+        @media (max-width: 700px) {
+
+            header {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+
+            nav a {
+                margin: 0 8px;
+            }
+
+            .hero h1 {
+                font-size: 30px;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+
+            .category-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .track-box {
+                flex-direction: column;
+            }
+
+            .track-btn {
+                padding: 13px;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-  <div class="form-container">
-
-    <div class="form-header">
-      <h2>Register a Complaint</h2>
-      <p>We're here to help! Let us know what went wrong.</p>
+<header>
+    <div class="logo">
+        🎓 College <span>Complaint Portal</span>
     </div>
 
-    <form class="form-body" id="complaintForm">
+    <nav>
+        <a href="#register">Register</a>
+        <a href="#track">Track</a>
+        <a href="#history">History</a>
+    </nav>
+</header>
 
-      <div class="form-group">
-        <label for="name">Full Name</label>
-        <input
-          type="text"
-          id="name"
-          class="form-control"
-          placeholder="Enter Name"
-          required
-        >
-      </div>
+<section class="hero">
+    <h1>Student Complaint Registration</h1>
+    <p>Raise your concern and track its progress easily.</p>
+</section>
 
-      <div class="form-group">
-        <label for="email">Email Address</label>
-        <input
-          type="email"
-          id="email"
-          class="form-control"
-          placeholder="yash143@gmail.com"
-          required
-        >
-      </div>
+<div class="container">
 
-      <div class="form-group">
-        <label>Category</label>
+    <div class="success" id="successMessage">
+        <h3>✅ Complaint Submitted Successfully!</h3>
+        <p>Your complaint has been registered.</p>
 
-        <div class="category-grid">
+        <div class="complaint-id" id="generatedId"></div>
 
-          <div class="category-card" data-category="Technical">
-            💻 Technical
-          </div>
+        <p style="margin-top:10px;">
+            Please save this Complaint ID for tracking.
+        </p>
+    </div>
 
-          <div class="category-card" data-category="Billing">
-            💳 Billing
-          </div>
+    <div class="card" id="register">
 
-          <div class="category-card" data-category="Delivery">
-            📦 Delivery
-          </div>
+        <h2>📝 Register a New Complaint</h2>
 
-          <div class="category-card" data-category="Service">
-            🛠️ Service
-          </div>
+        <form id="complaintForm">
 
-          <div class="category-card" data-category="Account">
-            👤 Account
-          </div>
+            <div class="form-row">
 
-          <div class="category-card" data-category="Other">
-            📋 Other
-          </div>
+                <div class="form-group">
+                    <label for="studentName">Student Name *</label>
+
+                    <input
+                        type="text"
+                        id="studentName"
+                        placeholder="Enter your full name"
+                        pattern="[A-Za-z ]+"
+                        title="Name can contain only letters and spaces"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="studentEmail">Email Address *</label>
+
+                    <input
+                        type="email"
+                        id="studentEmail"
+                        placeholder="student@example.com"
+                        required
+                    >
+                </div>
+
+            </div>
+
+            <div class="form-row">
+
+                <div class="form-group">
+                    <label for="rollNo">Roll Number *</label>
+
+                    <input
+                        type="text"
+                        id="rollNo"
+                        placeholder="Enter roll number"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="department">Department *</label>
+
+                    <select id="department" required>
+
+                        <option value="">Select Department</option>
+                        <option>Computer Engineering</option>
+                        <option>Information Technology</option>
+                        <option>Computer Science</option>
+                        <option>Mechanical Engineering</option>
+                        <option>Civil Engineering</option>
+                        <option>Electronics Engineering</option>
+                        <option>Electrical Engineering</option>
+                        <option>Other</option>
+
+                    </select>
+                </div>
+
+            </div>
+
+            <div class="form-group">
+
+                <label>Complaint Category *</label>
+
+                <div class="category-grid">
+
+                    <div class="category" data-category="Academic">
+                        <span class="category-icon">📚</span>
+                        Academic
+                    </div>
+
+                    <div class="category" data-category="Faculty">
+                        <span class="category-icon">👨‍🏫</span>
+                        Faculty
+                    </div>
+
+                    <div class="category" data-category="Infrastructure">
+                        <span class="category-icon">🏢</span>
+                        Infrastructure
+                    </div>
+
+                    <div class="category" data-category="Library">
+                        <span class="category-icon">📖</span>
+                        Library
+                    </div>
+
+                    <div class="category" data-category="Laboratory">
+                        <span class="category-icon">🔬</span>
+                        Laboratory
+                    </div>
+
+                    <div class="category" data-category="Hostel">
+                        <span class="category-icon">🏠</span>
+                        Hostel
+                    </div>
+
+                    <div class="category" data-category="Canteen">
+                        <span class="category-icon">🍽️</span>
+                        Canteen
+                    </div>
+
+                    <div class="category" data-category="Technical">
+                        <span class="category-icon">💻</span>
+                        Technical
+                    </div>
+
+                </div>
+
+                <input type="hidden" id="category" required>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="subject">
+                    Complaint Subject * (Minimum 20 words)
+                </label>
+
+                <input
+                    type="text"
+                    id="subject"
+                    placeholder="Write at least 20 words for your complaint subject"
+                    required
+                >
+
+                <div id="subjectCount" class="word-count">
+                    0 / 20 words
+                </div>
+
+            </div>
+
+   
+            <div class="form-group">
+
+                <label for="priority">Priority *</label>
+
+                <select id="priority" required>
+
+                    <option value="">Select Priority</option>
+                    <option value="Low">Low</option>
+                    <option value="Medium">Medium</option>
+                    <option value="High">High</option>
+                    <option value="Urgent">Urgent</option>
+
+                </select>
+
+            </div>
+
+           
+            <div class="form-group">
+
+                <label for="description">
+                    Detailed Description * (Minimum 30 words)
+                </label>
+
+                <textarea
+                    id="description"
+                    placeholder="Explain your complaint in detail using at least 30 words..."
+                    required
+                ></textarea>
+
+                <div id="descriptionCount" class="word-count">
+                    0 / 30 words
+                </div>
+
+            </div>
+
+            <div class="form-group">
+
+                <label for="attachment">
+                    Attachment (Optional)
+                </label>
+
+                <input
+                    type="file"
+                    id="attachment"
+                    accept=".jpg,.jpeg,.png,.pdf"
+                >
+
+            </div>
+
+            <button
+                type="submit"
+                class="submit-btn"
+            >
+                🚀 Submit Complaint
+            </button>
+
+        </form>
+
+    </div>
+
+
+    <div class="card" id="track">
+
+        <h2>🔍 Track Your Complaint</h2>
+
+        <div class="track-box">
+
+            <input
+                type="text"
+                id="trackingId"
+                placeholder="Enter Complaint ID e.g. CMP-123456"
+            >
+
+            <button
+                class="track-btn"
+                onclick="trackComplaint()"
+            >
+                Track
+            </button>
 
         </div>
 
-        <div id="selectedCategory" class="selected-category"></div>
+        <div id="trackResult"></div>
 
-        <input type="hidden" id="category" required>
-      </div>
+    </div>
 
-      <div class="form-group">
-        <label for="subject">Complaint Subject</label>
-        <input
-          type="text"
-          id="subject"
-          class="form-control"
-          placeholder="Brief summary"
-          required
-        >
-      </div>
+ 
+    <div class="card" id="history">
 
-      <div class="form-group">
-        <label for="details">Detailed Description</label>
+        <h2>📋 Complaint History</h2>
 
-        <textarea
-          id="details"
-          class="form-control"
-          rows="5"
-          placeholder="Describe your issue in at least 30 words..."
-          required
-        ></textarea>
+        <div id="historyList"></div>
 
-        <div id="wordCounter" class="word-counter">
-          0 / 30 words
-        </div>
+    </div>
 
-        <div id="errorMessage" class="error-message">
-          Description must contain at least 30 words.
-        </div>
-      </div>
+</div>
 
-      <button type="submit" class="btn-submit">
-        Submit Complaint
-      </button>
+<footer>
 
-    </form>
-  </div>
+    <h3>🎓 College Complaint Portal</h3>
 
-  <script>
-    const categoryCards = document.querySelectorAll(".category-card");
-    const categoryInput = document.getElementById("category");
-    const selectedCategory = document.getElementById("selectedCategory");
+    <p>
+        A simple and transparent platform for students to register complaints.
+    </p>
 
-    categoryCards.forEach(card => {
-      card.addEventListener("click", function() {
+    <p>
+        © 2026 College Complaint Portal
+    </p>
 
-        categoryCards.forEach(item => {
-          item.classList.remove("selected");
+</footer>
+
+<script>
+
+ 
+
+    const categories =
+        document.querySelectorAll(".category");
+
+    categories.forEach(category => {
+
+        category.addEventListener("click", function() {
+
+            categories.forEach(item => {
+                item.classList.remove("selected");
+            });
+
+            this.classList.add("selected");
+
+            document.getElementById("category").value =
+                this.dataset.category;
+
         });
 
-        this.classList.add("selected");
-
-        const categoryName = this.getAttribute("data-category");
-
-        categoryInput.value = categoryName;
-
-        selectedCategory.textContent = "Selected Category: " + categoryName;
-        selectedCategory.style.display = "block";
-      });
     });
 
-    const details = document.getElementById("details");
-    const wordCounter = document.getElementById("wordCounter");
-    const errorMessage = document.getElementById("errorMessage");
-    const complaintForm = document.getElementById("complaintForm");
+ 
 
     function countWords(text) {
-      return text.trim() === ""
-        ? 0
-        : text.trim().split(/\s+/).length;
+
+        return text
+            .trim()
+            .split(/\s+/)
+            .filter(word => word.length > 0)
+            .length;
+
     }
 
-    details.addEventListener("input", function() {
-      const words = countWords(this.value);
 
-      wordCounter.textContent = words + " / 30 words";
+    const subject =
+        document.getElementById("subject");
 
-      if (words >= 30) {
-        wordCounter.classList.remove("invalid");
-        wordCounter.classList.add("valid");
-        errorMessage.style.display = "none";
-      } else {
-        wordCounter.classList.remove("valid");
-        wordCounter.classList.add("invalid");
-      }
+    const subjectCount =
+        document.getElementById("subjectCount");
+
+    subject.addEventListener("input", function() {
+
+        const words = countWords(this.value);
+
+        subjectCount.textContent =
+            words + " / 20 words";
+
+        if (words >= 20) {
+
+            subjectCount.classList.add("valid");
+            subjectCount.classList.remove("invalid");
+
+        } else {
+
+            subjectCount.classList.add("invalid");
+            subjectCount.classList.remove("valid");
+
+        }
+
     });
 
-    complaintForm.addEventListener("submit", function(event) {
-      event.preventDefault();
 
-      const words = countWords(details.value);
+    const description =
+        document.getElementById("description");
 
-      if (categoryInput.value === "") {
-        alert("Please select a complaint category.");
-        return;
-      }
+    const descriptionCount =
+        document.getElementById("descriptionCount");
 
-      if (words < 30) {
-        errorMessage.style.display = "block";
-        details.focus();
-        return;
-      }
+    description.addEventListener("input", function() {
 
-      alert("Complaint submitted successfully!");
+        const words = countWords(this.value);
 
-      complaintForm.reset();
+        descriptionCount.textContent =
+            words + " / 30 words";
 
-      categoryCards.forEach(card => {
-        card.classList.remove("selected");
-      });
+        if (words >= 30) {
 
-      selectedCategory.style.display = "none";
-      selectedCategory.textContent = "";
-      categoryInput.value = "";
+            descriptionCount.classList.add("valid");
+            descriptionCount.classList.remove("invalid");
 
-      wordCounter.textContent = "0 / 30 words";
-      wordCounter.classList.remove("valid");
-      wordCounter.classList.remove("invalid");
-      errorMessage.style.display = "none";
+        } else {
+
+            descriptionCount.classList.add("invalid");
+            descriptionCount.classList.remove("valid");
+
+        }
+
     });
-  </script>
+
+
+
+    function generateComplaintId() {
+
+        const randomNumber =
+            Math.floor(100000 + Math.random() * 900000);
+
+        return "CMP-" + randomNumber;
+
+    }
+
+
+    document.getElementById("complaintForm")
+        .addEventListener("submit", function(event) {
+
+        event.preventDefault();
+
+
+        const name =
+            document.getElementById("studentName").value.trim();
+
+        const namePattern =
+            /^[A-Za-z ]+$/;
+
+        if (!namePattern.test(name)) {
+
+            alert(
+                "Student Name can contain only letters and spaces."
+            );
+
+            return;
+
+        }
+
+
+        const category =
+            document.getElementById("category").value;
+
+        if (category === "") {
+
+            alert(
+                "Please select a complaint category."
+            );
+
+            return;
+
+        }
+
+
+        const subjectText =
+            document.getElementById("subject").value.trim();
+
+        const subjectWords =
+            countWords(subjectText);
+
+        if (subjectWords < 20) {
+
+            alert(
+                "Complaint Subject must contain at least 20 words.\n\n" +
+                "You have entered only " +
+                subjectWords +
+                " words."
+            );
+
+            document.getElementById("subject").focus();
+
+            return;
+
+        }
+
+
+        const descriptionText =
+            document.getElementById("description").value.trim();
+
+        const descriptionWords =
+            countWords(descriptionText);
+
+        if (descriptionWords < 30) {
+
+            alert(
+                "Detailed Description must contain at least 30 words.\n\n" +
+                "You have entered only " +
+                descriptionWords +
+                " words."
+            );
+
+            document.getElementById("description").focus();
+
+            return;
+
+        }
+
+
+        const complaintId =
+            generateComplaintId();
+
+
+        const complaint = {
+
+            id: complaintId,
+
+            name: name,
+
+            email:
+                document.getElementById("studentEmail").value,
+
+            rollNo:
+                document.getElementById("rollNo").value,
+
+            department:
+                document.getElementById("department").value,
+
+            category: category,
+
+            subject: subjectText,
+
+            priority:
+                document.getElementById("priority").value,
+
+            description: descriptionText,
+
+            date:
+                new Date().toLocaleString(),
+
+            status:
+                "Submitted"
+
+        };
+
+
+        let complaints =
+            JSON.parse(
+                localStorage.getItem("complaints")
+            ) || [];
+
+
+        complaints.push(complaint);
+
+
+        localStorage.setItem(
+            "complaints",
+            JSON.stringify(complaints)
+        );
+
+
+        document.getElementById("generatedId")
+            .textContent =
+            "Complaint ID: " + complaintId;
+
+        document.getElementById("successMessage")
+            .style.display = "block";
+
+
+        this.reset();
+
+        categories.forEach(item => {
+            item.classList.remove("selected");
+        });
+
+        document.getElementById("category").value = "";
+
+        subjectCount.textContent =
+            "0 / 20 words";
+
+        subjectCount.classList.remove(
+            "valid",
+            "invalid"
+        );
+
+        descriptionCount.textContent =
+            "0 / 30 words";
+
+        descriptionCount.classList.remove(
+            "valid",
+            "invalid"
+        );
+
+        displayHistory();
+
+
+        document.getElementById("successMessage")
+            .scrollIntoView({
+                behavior: "smooth"
+            });
+
+    });
+
+
+    function trackComplaint() {
+
+        const id =
+            document.getElementById("trackingId")
+            .value
+            .trim()
+            .toUpperCase();
+
+        const result =
+            document.getElementById("trackResult");
+
+
+        if (id === "") {
+
+            result.innerHTML =
+                "<p style='color:#dc2626;'>Please enter a Complaint ID.</p>";
+
+            return;
+
+        }
+
+
+        const complaints =
+            JSON.parse(
+                localStorage.getItem("complaints")
+            ) || [];
+
+
+        const complaint =
+            complaints.find(
+                item => item.id === id
+            );
+
+
+        if (!complaint) {
+
+            result.innerHTML = `
+                <div class="status-card">
+
+                    <strong>
+                        ❌ Complaint Not Found
+                    </strong>
+
+                    <p style="margin-top:8px;">
+                        Please check your Complaint ID
+                        and try again.
+                    </p>
+
+                </div>
+            `;
+
+            return;
+
+        }
+
+
+        result.innerHTML = `
+
+            <div class="status-card">
+
+                <h3>
+                    ${complaint.subject}
+                </h3>
+
+                <p style="margin-top:8px;">
+                    <strong>Complaint ID:</strong>
+                    ${complaint.id}
+                </p>
+
+                <p style="margin-top:5px;">
+                    <strong>Category:</strong>
+                    ${complaint.category}
+                </p>
+
+                <p style="margin-top:5px;">
+                    <strong>Priority:</strong>
+                    ${complaint.priority}
+                </p>
+
+                <p style="margin-top:5px;">
+                    <strong>Date:</strong>
+                    ${complaint.date}
+                </p>
+
+                <span class="status">
+                    ${complaint.status}
+                </span>
+
+            </div>
+
+        `;
+
+    }
+
+    function displayHistory() {
+
+        const historyList =
+            document.getElementById("historyList");
+
+
+        const complaints =
+            JSON.parse(
+                localStorage.getItem("complaints")
+            ) || [];
+
+
+        if (complaints.length === 0) {
+
+            historyList.innerHTML = `
+                <div class="empty">
+                    No complaints have been registered yet.
+                </div>
+            `;
+
+            return;
+
+        }
+
+
+        historyList.innerHTML = "";
+
+
+        complaints
+            .slice()
+            .reverse()
+            .forEach(complaint => {
+
+                const item =
+                    document.createElement("div");
+
+                item.className =
+                    "complaint-item";
+
+
+                item.innerHTML = `
+
+                    <strong>
+                        ${complaint.id}
+                    </strong>
+
+                    <h3 style="margin:7px 0;">
+                        ${complaint.subject}
+                    </h3>
+
+                    <p>
+                        Category:
+                        ${complaint.category}
+                    </p>
+
+                    <p>
+                        Priority:
+                        ${complaint.priority}
+                    </p>
+
+                    <p>
+                        Status:
+                        <strong>
+                            ${complaint.status}
+                        </strong>
+                    </p>
+
+                    <small>
+                        ${complaint.date}
+                    </small>
+
+                `;
+
+
+                historyList.appendChild(item);
+
+            });
+
+    }
+
+
+    displayHistory();
+
+</script>
 
 </body>
 </html>
-
